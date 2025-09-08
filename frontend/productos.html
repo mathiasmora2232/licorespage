@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - Licores Page</title>
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/productos.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="nav-logo">🍷 LicoresPage</div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="inicio.html">🏠 Inicio</a></li>
+            <li><a href="productos.html" class="active">📦 Productos</a></li>
+            <li><a href="sobre-nosotros.html">ℹ️ Nosotros</a></li>
+            <li><a href="contacto.html">📞 Contacto</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="carrito.html" class="nav-icon" id="carrito-btn">
+                🛒 <span class="cart-count">0</span>
+            </a>
+            <a href="cuenta.html" class="nav-icon">👤 Cuenta</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="productos-header">
+            <h1>🍾 Nuestros Productos</h1>
+            <p>Descubre nuestra selección premium de licores, vinos y destilados</p>
+        </div>
+
+        <div class="filtros-container">
+            <div class="filtros">
+                <button class="filtro-btn active" data-categoria="todos">🔄 Todos</button>
+                <button class="filtro-btn" data-categoria="vinos">🍷 Vinos</button>
+                <button class="filtro-btn" data-categoria="cervezas">🍺 Cervezas</button>
+                <button class="filtro-btn" data-categoria="whisky">🥃 Whisky</button>
+                <button class="filtro-btn" data-categoria="vodka">🍸 Vodka</button>
+                <button class="filtro-btn" data-categoria="ron">🏴‍☠️ Ron</button>
+            </div>
+            <div class="busqueda">
+                <input type="text" id="buscador" placeholder="🔍 Buscar productos...">
+            </div>
+        </div>
+
+        <div class="productos-container">
+            <div class="productos-grid" id="productos-grid">
+                <!-- Los productos se cargarán dinámicamente con JavaScript -->
+            </div>
+        </div>
+
+        <!-- Modal para detalles del producto -->
+        <div id="modal-producto" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="modal-body">
+                    <div class="modal-imagen">
+                        <img id="modal-img" src="" alt="">
+                    </div>
+                    <div class="modal-info">
+                        <h2 id="modal-titulo"></h2>
+                        <p id="modal-descripcion"></p>
+                        <div class="modal-precio">
+                            <span id="modal-precio"></span>
+                        </div>
+                        <div class="modal-cantidad">
+                            <label for="cantidad">Cantidad:</label>
+                            <div class="cantidad-controls">
+                                <button type="button" id="btn-menos">-</button>
+                                <input type="number" id="cantidad" value="1" min="1" max="10">
+                                <button type="button" id="btn-mas">+</button>
+                            </div>
+                        </div>
+                        <button class="btn-agregar-carrito" id="btn-agregar-carrito">
+                            🛒 Agregar al Carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/productos.js"></script>
+    <script src="js/carrito.js"></script>
+</body>
+</html>
