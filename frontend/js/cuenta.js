@@ -408,7 +408,7 @@ function cargarFavoritos() {
             <h4>${producto.nombre}</h4>
             <p class="precio">$${producto.precio.toFixed(2)}</p>
             <div class="favorito-actions">
-                <button class="btn-primary btn-sm" onclick="agregarAlCarritoDesdeF avoritos(${producto.id})">
+                <button class="btn-primary btn-sm" onclick="agregarAlCarritoDesdefavoritos(${producto.id})">
                     🛒 Agregar
                 </button>
                 <button class="btn-sm btn-danger" onclick="quitarDeFavoritos(${producto.id})">
@@ -486,10 +486,35 @@ function quitarDeFavoritos(id) {
     setTimeout(() => cargarFavoritos(), 1000);
 }
 
-function agregarAlCarritoDesdeF avoritos(id) {
+function agregarAlCarritoDesdefavoritos(id) {
     const producto = datosEjemplo.favoritos.find(p => p.id === id);
     if (producto) {
-        // Agregar al carrito (requiere función del carrito)
+        // Obtener carrito actual
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        
+        // Buscar si el producto ya está en el carrito
+        const index = carrito.findIndex(item => item.id === producto.id);
+        
+        if (index > -1) {
+            // Si ya existe, aumentar cantidad
+            carrito[index].cantidad += 1;
+        } else {
+            // Si no existe, agregarlo
+            carrito.push({
+                id: producto.id,
+                nombre: producto.nombre,
+                precio: producto.precio,
+                imagen: producto.imagen,
+                cantidad: 1
+            });
+        }
+        
+        // Guardar carrito actualizado
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        
+        // Actualizar contador
+        actualizarContadorCarrito();
+        
         mostrarNotificacion(`🛒 ${producto.nombre} agregado al carrito`, 'success');
     }
 }
@@ -541,10 +566,10 @@ function ocultarCargando() {
 
 function mostrarNotificacion(mensaje, tipo = 'success') {
     const colores = {
-        success: 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)',
-        error: 'linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%)',
-        warning: 'linear-gradient(135deg, #ff9800 0%, #f57c00 100%)',
-        info: 'linear-gradient(135deg, #2196f3 0%, #1976d2 100%)'
+        success: '#27ae60',
+        error: '#e74c3c',
+        warning: '#f39c12',
+        info: '#3498db'
     };
 
     const notif = document.createElement('div');
