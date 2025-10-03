@@ -4,7 +4,7 @@ async function cargarProductos() {
     if (!grid) return;
     grid.innerHTML = '<span>Cargando productos...</span>';
     try {
-        const resp = await fetch('http://localhost:8080/api/productos');
+    const resp = await fetch('http://localhost:8081/api/productos');
         if (!resp.ok) throw new Error('Error al obtener productos');
         const productos = await resp.json();
         if (!Array.isArray(productos) || productos.length === 0) {
