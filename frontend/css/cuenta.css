@@ -71,9 +71,9 @@ main {
 }
 
 .tab-btn.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #3498db;
     color: white;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
 /* Formularios */
@@ -153,8 +153,8 @@ main {
 }
 
 .checkbox-container input[type="checkbox"]:checked + .checkmark {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-color: #667eea;
+    background: #3498db;
+    border-color: #3498db;
 }
 
 .checkbox-container input[type="checkbox"]:checked + .checkmark::after {
@@ -168,20 +168,20 @@ main {
 }
 
 .forgot-password {
-    color: #667eea;
+    color: #3498db;
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.3s ease;
 }
 
 .forgot-password:hover {
-    color: #764ba2;
+    color: #2980b9;
 }
 
 .btn-primary {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #3498db;
     color: white;
     border: none;
     border-radius: 15px;
@@ -194,8 +194,9 @@ main {
 }
 
 .btn-primary:hover {
+    background: #2980b9;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
 }
 
 /* Panel de usuario */
@@ -219,10 +220,7 @@ main {
 
 .user-welcome h1 {
     font-size: 2.2rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #2c3e50;
     margin-bottom: 5px;
     font-weight: 700;
 }
@@ -235,7 +233,7 @@ main {
 
 .btn-logout {
     padding: 12px 25px;
-    background: #ff6b6b;
+    background: #e74c3c;
     color: white;
     border: none;
     border-radius: 15px;
@@ -245,9 +243,9 @@ main {
 }
 
 .btn-logout:hover {
-    background: #ff5252;
+    background: #c0392b;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
 }
 
 .panel-content {
@@ -286,7 +284,7 @@ main {
 
 .nav-item:hover,
 .nav-item.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #3498db;
     color: white;
     transform: translateX(5px);
 }
@@ -320,10 +318,7 @@ main {
 
 .section-header h2 {
     font-size: 1.8rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #2c3e50;
     margin: 0;
     font-weight: 700;
 }
@@ -331,7 +326,7 @@ main {
 .btn-edit,
 .btn-add {
     padding: 10px 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #3498db;
     color: white;
     border: none;
     border-radius: 12px;
@@ -361,14 +356,14 @@ main {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #3498db;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
     color: white;
     margin-bottom: 15px;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
 }
 
 .btn-change-avatar {
@@ -460,7 +455,7 @@ main {
 }
 
 .toggle-switch input[type="checkbox"]:checked + .slider {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #27ae60;
 }
 
 .toggle-switch input[type="checkbox"]:checked + .slider::after {
@@ -469,7 +464,7 @@ main {
 
 .btn-danger {
     padding: 12px 25px;
-    background: #ff6b6b;
+    background: #e74c3c;
     color: white;
     border: none;
     border-radius: 12px;
