@@ -16,12 +16,17 @@ main {
 }
 
 .hero {
-    padding: 60px 40px;
+    /* Full-bleed hero: ocupa todo el ancho de la ventana */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 40px 0 30px; /* menos espacio inferior para subir el borde */
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    margin-bottom: 40px;
-    border: 1px solid #e9ecef;
+    border-radius: 0 0 12px 12px; /* ligera curvatura inferior */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    margin-bottom: 24px; /* acercar el siguiente contenido */
+    border-top: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
 }
 
 .hero-content {
@@ -30,10 +35,13 @@ main {
     align-items: center;
     justify-content: center;
     gap: 40px;
+    max-width: 1200px; /* centrar el contenido dentro del hero full-bleed */
+    margin: 0 auto;
+    padding: 0 40px;
 }
 
 .hero-text {
-    max-width: 450px;
+    max-width: 700px; /* permitir que el texto ocupe más ancho en pantallas grandes */
 }
 
 .hero-img img {
@@ -156,26 +164,35 @@ main {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        height: auto;
-        padding: 15px 20px;
-    }
-    
-    .nav-links {
-        margin: 10px 0;
-    }
-    
     .hero {
-        padding: 40px 20px;
-        margin: 20px;
+        /* Full-bleed hero: ocupa todo el ancho de la ventana */
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        padding: 40px 0 30px; /* menos espacio inferior para subir el borde */
+        background: #ffffff;
+        border-radius: 0 0 12px 12px; /* mantener ligera curvatura inferior si se desea */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        margin-bottom: 24px; /* acercar el siguiente contenido */
+        border-top: 1px solid #e9ecef;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .hero-content {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        max-width: 1200px; /* centrar el contenido dentro del hero full-bleed */
+        margin: 0 auto;
+        padding: 0 40px;
+    }
+
+    .hero-text {
+        max-width: 700px; /* permitir que el texto ocupe más ancho en pantallas grandes */
     }
     
-    .hero-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 30px;
-    }
 
     .hero h1 {
         font-size: 2.2rem;
