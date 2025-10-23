@@ -1,161 +1,92 @@
+/* Navigation Bar Styles */
 .navbar {
-    background: #2c3e50;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 40px;
-    height: 70px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: sticky;
+    position: static;
     top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
 
-.nav-brand {
+.nav-container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 60px;
 }
 
 .nav-logo {
     color: #fff;
-    font-size: 1.6rem;
+    font-size: 24px;
     font-weight: bold;
+    text-decoration: none;
     letter-spacing: 1px;
-    text-shadow: none;
 }
 
-.nav-links {
-    list-style: none;
+.nav-logo:hover {
+    color: #ddd;
+    transition: color 0.3s ease;
+}
+
+.nav-menu {
     display: flex;
-    gap: 20px;
+    list-style: none;
     margin: 0;
     padding: 0;
+    gap: 0;
 }
 
-.nav-links li {
-    display: inline-block;
+.nav-item {
+    margin: 0;
 }
 
-.nav-links a {
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 10px 16px;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-    background-color: #34495e;
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.nav-actions {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.nav-icon {
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 8px 28px 8px 12px; /* más espacio a la derecha para que el badge quede completamente fuera */
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.nav-icon svg {
-    width: 28px; /* icono ligeramente más grande */
-    height: 28px;
+.nav-link {
     display: block;
-    transition: transform 0.3s ease;
-    z-index: 1; /* asegurar que el SVG quede debajo del badge visualmente si hay solapamiento pequeño */
-}
-
-.nav-icon:hover svg {
-    transform: scale(1.1);
-}
-
-.nav-icon:hover {
-    background-color: #34495e;
     color: #fff;
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
+    text-decoration: none;
+    padding: 20px 25px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
 }
 
-.cart-count {
-    background: #e74c3c;
-    color: white;
-    border-radius: 50%;
-    padding: 6px 9px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    margin-left: 5px;
-    min-width: 22px;
-    height: 22px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    position: absolute;
-    top: 50%;
-    right: -28px; /* lateralmente fuera del botón */
-    transform: translateY(-50%); /* centrado verticalmente */
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    z-index: 2;
+.nav-link:hover {
+    background-color: #555;
+    color: #fff;
+    border-bottom-color: #007bff;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.cart-count.pulse {
-    animation: pulse 0.6s ease-in-out;
-}
-
-#carrito-btn {
-    position: relative;
-}
-
-#carrito-btn:hover .cart-count {
-    background: #c0392b;
+.nav-link.active {
+    background-color: #007bff;
+    border-bottom-color: #0056b3;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .navbar {
-        padding: 0 20px;
-        height: 60px;
-        flex-wrap: wrap;
+    .nav-container {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 20px;
     }
     
-    .nav-links {
-        gap: 10px;
+    .nav-menu {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
     }
     
-    .nav-links a {
-        font-size: 0.9rem;
-        padding: 8px 12px;
+    .nav-link {
+        padding: 15px 20px;
+        border-bottom: 1px solid #555;
     }
     
-    .nav-logo {
-        font-size: 1.4rem;
+    .nav-link:hover {
+        border-bottom-color: #007bff;
     }
 }
