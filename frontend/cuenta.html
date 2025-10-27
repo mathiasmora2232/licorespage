@@ -6,6 +6,7 @@
     <title>Mi Cuenta - Licores Page</title>
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/cuenta.css">
+    <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
     <nav class="navbar">
@@ -15,7 +16,7 @@
         <ul class="nav-links">
             <li><a href="inicio.html"> Inicio</a></li>
             <li><a href="productos.html"> Productos</a></li>
-            <li><a href="sobre-nosotros.html"> Nosotros</a></li>
+            <li><a href="nosotros.html"> Nosotros</a></li>
             <li><a href="contacto.html"> Contacto</a></li>
         </ul>
         <div class="nav-actions">
@@ -251,5 +252,18 @@
 
     <script src="js/cuenta.js"></script>
     <script src="js/carrito.js"></script>
+        <script>
+            // Al hacer clic en cerrar sesión, redirigir a la página de login
+            (function(){
+                const btn = document.getElementById('btn-logout');
+                if(btn){
+                    btn.addEventListener('click', function(){
+                        // Aquí podríamos limpiar el token/localStorage si existe
+                        try{ localStorage.removeItem('authToken'); }catch(e){}
+                        window.location.href = 'login.html';
+                    });
+                }
+            })();
+        </script>
 </body>
 </html>

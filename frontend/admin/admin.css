@@ -1,0 +1,8 @@
+body{font-family:Arial,Helvetica,sans-serif;padding:0px}
+.container{max-width:1000px;margin:0 auto}
+nav{margin-bottom:12px}
+table{width:100%;border-collapse:collapse}
+table th, table td{padding:8px;border:1px solid #ddd}
+.mt20{margin-top:20px}
+label{display:block;margin-top:8px}
+input, textarea{padding:6px;width:100%;box-sizing:border-box}
