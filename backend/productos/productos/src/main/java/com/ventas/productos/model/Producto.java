@@ -12,6 +12,7 @@ public class Producto {
 	private String descripcion;
 	private Double precio;
 	private String imagen;
+	private String categoria;
 
 	public Long getId() { return id; }
 	public void setId(Long id) { this.id = id; }
@@ -23,4 +24,6 @@ public class Producto {
 	public void setPrecio(Double precio) { this.precio = precio; }
 	public String getImagen() { return imagen; }
 	public void setImagen(String imagen) { this.imagen = imagen; }
+	public String getCategoria() { return categoria; }
+	public void setCategoria(String categoria) { this.categoria = categoria; }
 }

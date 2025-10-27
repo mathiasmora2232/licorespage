@@ -114,6 +114,7 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
     justify-content: center;
+    justify-items: center; /* centrar las tarjetas dentro de cada celda */
     max-width: 1000px;
     margin: 0 auto;
 }
@@ -128,16 +129,31 @@ main {
     border: 1px solid #e9ecef;
 }
 
+/* Evitar que una sola tarjeta se estire a todo el ancho
+   y darle un tamaño más parecido a la página de productos */
+.producto {
+    max-width: 320px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .producto:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 .producto img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+    width: 160px;
+    height: 160px;
+    /* Mostrar la imagen completa sin recortarla */
+    object-fit: contain;
+    /* quitar recuadro de fondo solo en inicio */
+    background: transparent;
+    padding: 0;
     margin-bottom: 15px;
-    border-radius: 10px;
+    border-radius: 12px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .producto h3 {
