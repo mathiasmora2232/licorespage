@@ -1,0 +1,13 @@
+{
+  "name": "licorespage-frontend",
+  "version": "0.1.0",
+  "description": "Frontend assets for licorespage (TypeScript login)",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json -w"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
