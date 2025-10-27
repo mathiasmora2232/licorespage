@@ -119,9 +119,11 @@ function mostrarProductos() {
             `;
         } else {
             // Vista completa para página de productos
+            const categoriaLabel = getCategoriaLabel(prod.categoria);
+            const badgeHtml = categoriaLabel ? `<div class="categoria-badge">${categoriaLabel}</div>` : '';
             return `
                 <div class="producto-card" data-id="${prod.id}" data-categoria="${prod.categoria}">
-                    <div class="categoria-badge">${getCategoriaLabel(prod.categoria)}</div>
+                    ${badgeHtml}
                     <div class="producto-imagen">
                         <img src="img/${prod.imagen || 'licor.png'}" alt="${prod.nombre}" 
                              onerror="this.src='img/club.jpg'">
@@ -148,6 +150,7 @@ function getCategoriaLabel(categoria) {
         'vodka': '🍸 Vodka',
         'ron': '🏴‍☠️ Ron'
     };
+    if (!categoria) return '';
     return labels[categoria] || categoria;
 }
 
