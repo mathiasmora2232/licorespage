@@ -4,10 +4,13 @@
   "description": "Frontend assets for licorespage (TypeScript login)",
   "private": true,
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build:ts": "tsc -p tsconfig.json",
+    "build:bundle": "esbuild ts/login.ts --bundle --outfile=dist/login.js --platform=browser --format=esm && esbuild ts/admin/products.ts --bundle --outfile=dist/admin/products.js --platform=browser --format=esm",
+    "build": "npm run build:ts && npm run build:bundle",
     "watch": "tsc -p tsconfig.json -w"
   },
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "esbuild": "^0.18.0"
   }
 }

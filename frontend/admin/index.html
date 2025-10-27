@@ -31,21 +31,45 @@
     </nav>
 
   <main class="container">
-    <h1>Panel de administración</h1>
-    <p>Bienvenido al panel. Desde aquí podrás gestionar productos, descuentos, usuarios e inventario.</p>
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <nav>
+          <ul class="menu">
+            <li><a href="index.html" class="active">Inicio</a></li>
+            <li><a href="products.html">Gestionar productos</a></li>
+            <li><a href="#">Gestionar descuentos</a></li>
+            <li><a href="#">Códigos de descuento</a></li>
+            <li><a href="#">Usuarios</a></li>
+            <li><a href="#">Inventario</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <section class="admin-main">
+        <div class="admin-header">
+          <div>
+            <h1>Panel de administración</h1>
+            <p>Bienvenido al panel. Desde aquí podrás gestionar productos, descuentos, usuarios e inventario.</p>
+          </div>
+          <div class="admin-actions">
+            <button class="btn-ghost" onclick="location.href='../inicio.html'">Ver sitio</button>
+            <button class="btn-ghost" onclick="localStorage.removeItem('authToken'); location.href='../login.html'">Cerrar sesión</button>
+          </div>
+        </div>
 
-    <ul>
-      <li><a href="products.html">Gestionar productos</a></li>
-      <li><a href="#">Gestionar descuentos</a></li>
-      <li><a href="#">Gestionar códigos de descuento</a></li>
-      <li><a href="#">Gestionar usuarios</a></li>
-      <li><a href="#">Inventario</a></li>
-    </ul>
+        <div>
+          <p>Usa el menú para navegar entre las secciones de administración.</p>
+        </div>
+      </section>
+    </div>
   </main>
   <script src="admin.js"></script>
   <script>
     // Verificar autenticación/permiso al cargar el panel
     (async ()=>{ await checkAdminAuth(); })();
+  </script>
+  <script>
+    // Si el backend corre en otro origen, ajusta aquí. Por defecto asumimos http://localhost:8080
+    window.__API_BASE__ = window.__API_BASE__ || 'http://localhost:8080';
   </script>
 
 </body>

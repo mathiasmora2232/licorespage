@@ -6,3 +6,16 @@ table th, table td{padding:8px;border:1px solid #ddd}
 .mt20{margin-top:20px}
 label{display:block;margin-top:8px}
 input, textarea{padding:6px;width:100%;box-sizing:border-box}
+
+/* Nuevo estilo para el panel admin */
+.admin-layout{display:grid;grid-template-columns:220px 1fr;gap:20px}
+.admin-sidebar{background:#fff;padding:16px;border-radius:8px;box-shadow:0 6px 16px rgba(15,23,42,0.04)}
+.admin-sidebar .menu{list-style:none;padding:0;margin:0}
+.admin-sidebar .menu li{margin:8px 0}
+.admin-sidebar .menu a{display:block;padding:8px 10px;border-radius:6px;color:#111;text-decoration:none}
+.admin-sidebar .menu a.active, .admin-sidebar .menu a:hover{background:linear-gradient(90deg,#eef2ff,#f8fafc);color:#1f2937}
+.admin-main{background:#fff;padding:18px;border-radius:8px;box-shadow:0 6px 16px rgba(15,23,42,0.04)}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.admin-actions{display:flex;gap:8px}
+.btn-ghost{background:transparent;border:1px solid #e5e7eb;padding:8px 10px;border-radius:6px;cursor:pointer}
+.product-row-actions button{margin-right:6px}

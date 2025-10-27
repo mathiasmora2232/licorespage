@@ -36,51 +36,12 @@
   </section>
 
   <script>
-    const products = [];
-    const tbody = document.querySelector('#productsTable tbody');
-
-    function render(){
-      tbody.innerHTML = '';
-      products.forEach((p,i)=>{
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${i+1}</td><td>${p.name}</td><td>${p.price}</td><td>${p.stock}</td><td><button data-i="${i}" class="edit">Editar</button> <button data-i="${i}" class="del">Borrar</button></td>`;
-        tbody.appendChild(tr);
-      });
-    }
-
-    document.getElementById('createProductForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const p = {
-        name: document.getElementById('pname').value,
-        price: parseFloat(document.getElementById('pprice').value),
-        stock: parseInt(document.getElementById('pstock').value,10)
-      };
-      products.push(p);
-      render();
-      document.getElementById('createResult').textContent = 'Producto creado (local, simulado).';
-      this.reset();
-    });
-
-    tbody.addEventListener('click', function(e){
-      if(e.target.matches('.del')){
-        const i = e.target.getAttribute('data-i');
-        products.splice(i,1);
-        render();
-      }
-      if(e.target.matches('.edit')){
-        const i = e.target.getAttribute('data-i');
-        const p = products[i];
-        const name = prompt('Nombre', p.name);
-        if(name!==null) p.name = name;
-        render();
-      }
-    });
-
-    // Nota: reemplaza la lógica local con llamadas fetch a /api/admin/products cuando implementes backend
+    // Ahora la gestión de productos se realiza en TypeScript compilado a dist/admin/products.js
   </script>
   <script src="admin.js"></script>
   <script>
     (async ()=>{ await checkAdminAuth(); })();
   </script>
+  <script type="module" src="../dist/admin/products.js"></script>
 </body>
 </html>

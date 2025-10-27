@@ -2,9 +2,11 @@
 export type LoginResult = { token: string; user?: { name?: string; roles?: string[] } };
 
 export async function apiLogin(email: string, password: string): Promise<LoginResult> {
+  // Base URL configurable desde la página (window.__API_BASE__) o por defecto la misma origen
+  const base = (typeof window !== 'undefined' && (window as any).__API_BASE__) ? (window as any).__API_BASE__ : '';
   // Intento real: POST a /api/auth/login
   try {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(base + '/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })

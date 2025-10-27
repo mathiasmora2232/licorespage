@@ -65,6 +65,11 @@
     </div>
   </div>
 
+  <!-- Configuración: si el backend corre en otro puerto, ajusta la base -->
+  <script>
+    // Cambia esto si tu backend no está en el mismo origen (por ejemplo: http://localhost:8080)
+    window.__API_BASE__ = window.__API_BASE__ || 'http://localhost:8080';
+  </script>
   <!-- El comportamiento del formulario ahora está en TypeScript (compila a dist/login.js) -->
   <script type="module" src="dist/login.js"></script>
 </body>
