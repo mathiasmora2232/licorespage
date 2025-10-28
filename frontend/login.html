@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Login - Licores</title>
   <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/cuenta.css">
   <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
@@ -32,34 +33,82 @@
 
   <div class="container">
     <div class="auth-card" role="region" aria-labelledby="loginTitle">
-      <h1 id="loginTitle">Iniciar sesión</h1>
-      <p>Accede a tu cuenta para ver pedidos, historial y más.</p>
-      <form id="loginForm" novalidate>
-        <!-- Usamos el mismo diseño de la página de Cuenta para mantener consistencia -->
-        <div class="form-group">
-          <label for="login-email">Correo Electrónico</label>
-          <input type="email" id="login-email" name="email" placeholder="tu@email.com" required>
-        </div>
-        <div class="form-group">
-          <label for="login-password">Contraseña</label>
-          <input type="password" id="login-password" name="password" placeholder="••••••••" required>
-        </div>
+      <h1 id="loginTitle">Mi Cuenta</h1>
+      <p>Accede a tu cuenta o crea una nueva</p>
 
-        <div class="form-options">
-          <label class="checkbox-container">
-            <input type="checkbox" id="remember-me">
-            <span class="checkmark"></span>
-            Recordarme
-          </label>
-          <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-        </div>
+      <div class="auth-tabs">
+        <button class="tab-btn active" data-tab="login"> Iniciar Sesión</button>
+        <button class="tab-btn" data-tab="register"> Registrarse</button>
+      </div>
 
-        <div class="form-actions">
-          <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
-        </div>
+      <!-- Formulario de Login -->
+      <div id="login-form" class="auth-form active">
+        <form id="loginForm" novalidate>
+          <div class="form-group">
+            <label for="login-email"> Correo Electrónico</label>
+            <input type="email" id="login-email" name="email" placeholder="tu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password"> Contraseña</label>
+            <input type="password" id="login-password" name="password" placeholder="••••••••" required>
+          </div>
+          <div class="form-options">
+            <label class="checkbox-container">
+              <input type="checkbox" id="remember-me">
+              <span class="checkmark"></span>
+              Recordarme
+            </label>
+            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">INICIAR SESIÓN</button>
+          </div>
+          <div id="loginResult" aria-live="polite"></div>
+        </form>
+      </div>
 
-        <div id="loginResult" aria-live="polite"></div>
-      </form>
+      <!-- Formulario de Registro (copiado y adaptado de cuenta.html) -->
+      <div id="register-form" class="auth-form">
+        <form id="registerForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="register-name"> Nombre</label>
+              <input type="text" id="register-name" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="register-lastname"> Apellido</label>
+              <input type="text" id="register-lastname" placeholder="Tu apellido" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-email"> Correo Electrónico</label>
+            <input type="email" id="register-email" placeholder="tu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="register-phone"> Teléfono</label>
+            <input type="tel" id="register-phone" placeholder="+1 234 567 8900">
+          </div>
+          <div class="form-group">
+            <label for="register-password"> Contraseña</label>
+            <input type="password" id="register-password" placeholder="••••••••" required>
+          </div>
+          <div class="form-group">
+            <label for="register-confirm"> Confirmar Contraseña</label>
+            <input type="password" id="register-confirm" placeholder="••••••••" required>
+          </div>
+          <div class="form-options">
+            <label class="checkbox-container">
+              <input type="checkbox" id="accept-terms" required>
+              <span class="checkmark"></span>
+              Acepto los <a href="#">términos y condiciones</a>
+            </label>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">🎉 Crear Cuenta</button>
+          </div>
+          <div id="registerResult" aria-live="polite"></div>
+        </form>
+      </div>
 
       <p class="admin-link">¿Eres administrador? <a href="admin/index.html">Ir al panel admin</a></p>
     </div>
@@ -70,7 +119,65 @@
     // Cambia esto si tu backend no está en el mismo origen (por ejemplo: http://localhost:8080)
     window.__API_BASE__ = window.__API_BASE__ || 'http://localhost:8080';
   </script>
+  <script src="js/authLink.js"></script>
   <!-- El comportamiento del formulario ahora está en TypeScript (compila a dist/login.js) -->
   <script type="module" src="dist/login.js"></script>
+  <script>
+    // Tabs y lógica simple de login/registro (intenta el backend, si falla usa fallback demo)
+    document.addEventListener('DOMContentLoaded', function(){
+      // tabs
+      document.querySelectorAll('.tab-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+          btn.classList.add('active');
+          const tab = btn.getAttribute('data-tab');
+          document.querySelectorAll('.auth-form').forEach(f=>f.classList.remove('active'));
+          document.getElementById(tab + '-form').classList.add('active');
+        });
+      });
+
+      const loginForm = document.getElementById('loginForm');
+      const loginResult = document.getElementById('loginResult');
+      loginForm.addEventListener('submit', async function(e){
+        e.preventDefault();
+        loginResult.textContent = '';
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const base = window.__API_BASE__ || '';
+        try{
+          const res = await fetch(`${base}/api/auth/login`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          if(res.ok){
+            const data = await res.json();
+            if(data.token) localStorage.setItem('authToken', data.token);
+            window.location.href = 'cuenta.html';
+            return;
+          }
+        }catch(err){
+          // silenciamos y usamos fallback
+        }
+        // Fallback demo: acepta admin@demo/admin y user@demo/user
+        if((email === 'admin@demo' && password === 'admin') || (email === 'user@demo' && password === 'user')){
+          localStorage.setItem('authToken', 'demo-'+email);
+          window.location.href = 'cuenta.html';
+          return;
+        }
+        loginResult.textContent = 'Credenciales incorrectas o servidor no disponible.';
+      });
+
+      const registerForm = document.getElementById('registerForm');
+      const registerResult = document.getElementById('registerResult');
+      registerForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        // Simulación: mostramos mensaje y redirigimos al login para iniciar sesión
+        registerResult.textContent = 'Cuenta creada (simulado). Por favor, inicia sesión.';
+        setTimeout(()=>{
+          document.querySelector('.tab-btn[data-tab="login"]').click();
+        }, 900);
+      });
+    });
+  </script>
 </body>
 </html>
