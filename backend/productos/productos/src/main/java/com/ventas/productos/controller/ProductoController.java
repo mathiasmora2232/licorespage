@@ -2,85 +2,103 @@ package com.ventas.productos.controller;
 
 import com.ventas.productos.model.Producto;
 import com.ventas.productos.model.User;
-import com.ventas.productos.repository.ProductoRepository;
+import com.ventas.productos.service.ProductoService;
 import com.ventas.productos.service.AuthService;
+import com.ventas.productos.dto.ApiResponse;
+import com.ventas.productos.dto.ProductoResponse;
+import com.ventas.productos.exception.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/productos")
 @CrossOrigin(origins = "*")
+@Slf4j
 public class ProductoController {
-	private final ProductoRepository productoRepository;
-	private final AuthService authService;
+    private final ProductoService productoService;
+    private final AuthService authService;
 
-	public ProductoController(ProductoRepository productoRepository, AuthService authService) {
-		this.productoRepository = productoRepository;
-		this.authService = authService;
-	}
+    public ProductoController(ProductoService productoService, AuthService authService) {
+        this.productoService = productoService;
+        this.authService = authService;
+    }
 
-	// Listar todos
-	@GetMapping
-	public List<Producto> getAllProductos() {
-		return productoRepository.findAll();
-	}
+    // Listar todos
+    @GetMapping
+    public ResponseEntity<?> getAllProductos() {
+        List<ProductoResponse> productos = productoService.getAllProductos()
+                .stream()
+                .map(ProductoResponse::fromProducto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(ApiResponse.ok(productos, "Productos obtenidos exitosamente"));
+    }
 
-	// Obtener por ID
-	@GetMapping("/{id}")
-	public ResponseEntity<Producto> getProductoById(@PathVariable Long id) {
-		return productoRepository.findById(id)
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
-	}
+    // Obtener por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getProductoById(@PathVariable Long id) {
+        Producto producto = productoService.getProductoById(id);
+        return ResponseEntity.ok(ApiResponse.ok(ProductoResponse.fromProducto(producto), "Producto encontrado"));
+    }
 
-	// Crear (requiere rol ADMIN)
-	@PostMapping
-	public ResponseEntity<?> createProducto(@RequestBody Producto producto, HttpServletRequest req) {
-		if (!isAdmin(req)) return ResponseEntity.status(403).body("forbidden");
-		Producto saved = productoRepository.save(producto);
-		return ResponseEntity.created(URI.create("/api/productos/" + saved.getId())).body(saved);
-	}
+    // Filtrar por categoría
+    @GetMapping("/categoria/{categoria}")
+    public ResponseEntity<?> getProductosByCategoria(@PathVariable String categoria) {
+        List<ProductoResponse> productos = productoService.getProductosByCategoria(categoria)
+                .stream()
+                .map(ProductoResponse::fromProducto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(ApiResponse.ok(productos, "Productos de la categoría encontrados"));
+    }
 
-	// Actualizar
-	@PutMapping("/{id}")
-	public ResponseEntity<?> updateProducto(@PathVariable Long id, @RequestBody Producto producto, HttpServletRequest req) {
-		if (!isAdmin(req)) return ResponseEntity.status(403).body("forbidden");
-		return productoRepository.findById(id)
-				.map(existing -> {
-					existing.setNombre(producto.getNombre());
-					existing.setDescripcion(producto.getDescripcion());
-					existing.setPrecio(producto.getPrecio());
-					existing.setImagen(producto.getImagen());
-					Producto updated = productoRepository.save(existing);
-					return ResponseEntity.ok(updated);
-				})
-				.orElse(ResponseEntity.notFound().build());
-	}
+    // Crear (requiere rol ADMIN)
+    @PostMapping
+    public ResponseEntity<?> createProducto(@Valid @RequestBody Producto producto, HttpServletRequest req) {
+        isAdmin(req);
+        Producto saved = productoService.createProducto(producto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.ok(ProductoResponse.fromProducto(saved), "Producto creado exitosamente"));
+    }
 
-	// Eliminar
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteProducto(@PathVariable Long id, HttpServletRequest req) {
-		if (!isAdmin(req)) return ResponseEntity.status(403).body("forbidden");
-		if (!productoRepository.existsById(id)) {
-			return ResponseEntity.notFound().build();
-		}
-		productoRepository.deleteById(id);
-		return ResponseEntity.noContent().build();
-	}
+    // Actualizar
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateProducto(@PathVariable Long id, @Valid @RequestBody Producto producto, HttpServletRequest req) {
+        isAdmin(req);
+        Producto updated = productoService.updateProducto(id, producto);
+        return ResponseEntity.ok(ApiResponse.ok(ProductoResponse.fromProducto(updated), "Producto actualizado"));
+    }
 
-	private boolean isAdmin(HttpServletRequest req) {
-		String auth = req.getHeader("Authorization");
-		if (auth == null || !auth.startsWith("Bearer ")) return false;
-		String token = auth.substring(7);
-		Optional<User> u = authService.getUserForToken(token);
-		return u.map(user -> {
-			String roles = user.getRoles();
-			return roles != null && roles.contains("ADMIN");
-		}).orElse(false);
-	}
+    // Eliminar
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProducto(@PathVariable Long id, HttpServletRequest req) {
+        isAdmin(req);
+        productoService.deleteProducto(id);
+        return ResponseEntity.ok(ApiResponse.ok(null, "Producto eliminado exitosamente"));
+    }
+
+    private void isAdmin(HttpServletRequest req) {
+        String auth = req.getHeader("Authorization");
+        if (auth == null || !auth.startsWith("Bearer ")) {
+            throw new UnauthorizedException("Token no proporcionado");
+        }
+        
+        String token = auth.substring(7);
+        Optional<User> user = authService.getUserForToken(token);
+        
+        if (user.isEmpty()) {
+            throw new UnauthorizedException("Token inválido");
+        }
+
+        User u = user.get();
+        if (u.getRoles() == null || !u.getRoles().contains("ADMIN")) {
+            throw new UnauthorizedException("Se requiere rol ADMIN");
+        }
+    }
 }

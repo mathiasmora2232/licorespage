@@ -1,16 +1,28 @@
 {
   "name": "licorespage-frontend",
-  "version": "0.1.0",
-  "description": "Frontend assets for licorespage (TypeScript login)",
+  "version": "1.0.0",
+  "description": "Frontend para plataforma de e-commerce de licores",
   "private": true,
   "scripts": {
     "build:ts": "tsc -p tsconfig.json",
-    "build:bundle": "esbuild ts/login.ts --bundle --outfile=dist/login.js --platform=browser --format=esm && esbuild ts/admin/products.ts --bundle --outfile=dist/admin/products.js --platform=browser --format=esm",
+    "build:ts:watch": "tsc -p tsconfig.json -w",
+    "build:bundle": "esbuild ts/login.ts --bundle --outfile=dist/login.js --platform=browser --format=esm --sourcemap && esbuild ts/productos.ts --bundle --outfile=dist/productos.js --platform=browser --format=esm --sourcemap && esbuild ts/admin/products.ts --bundle --outfile=dist/admin/products.js --platform=browser --format=esm --sourcemap",
     "build": "npm run build:ts && npm run build:bundle",
-    "watch": "tsc -p tsconfig.json -w"
+    "watch": "npm run build:ts:watch",
+    "dev": "npm run build && npm run watch",
+    "lint": "tsc --noEmit"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
-    "esbuild": "^0.18.0"
-  }
+    "typescript": "^5.1.6",
+    "esbuild": "^0.19.0"
+  },
+  "keywords": [
+    "ecommerce",
+    "licores",
+    "bebidas",
+    "tienda-online"
+  ],
+  "author": "Development Team",
+  "license": "UNLICENSED"
 }
+
